@@ -3,7 +3,7 @@ import React from 'react';
 class Suggestion extends React.Component {
   handleClick = () => {
     const { addCoin, suggestion } = this.props;
-    addCoin(suggestion);
+    addCoin(suggestion.id);
   };
 
   // renderButton = () => {

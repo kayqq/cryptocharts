@@ -12,15 +12,6 @@ export const getCoins = async () => {
 export const getCoinData = async coinId => {
   const res = await axiosInstance.get(`/coins/${coinId}`);
   return res.data;
-  // const { id, symbol, name, market_data } = res.data;
-  // return {
-  //   id: id,
-  //   symbol: symbol,
-  //   name: name,
-  //   price: market_data.current_price.usd,
-  //   change: market_data.price_change_24h,
-  //   changePercent: market_data.price_change_percentage_24h_in_currency.usd,
-  // };
 };
 
 export const getMarketChart = async (

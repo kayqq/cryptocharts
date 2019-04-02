@@ -7,14 +7,14 @@ class Searchbar extends Component {
   state = {
     value: '',
     suggestions: [],
-    symbols: [],
+    allCoins: [],
   };
 
   componentWillMount() {
     this.fetchSuggestions();
   }
   fetchSuggestions = async () => {
-    this.setState({ symbols: await getCoins() });
+    this.setState({ allCoins: await getCoins() });
   };
 
   onChange = (event, { newValue }) => {
@@ -26,30 +26,25 @@ class Searchbar extends Component {
   onSuggestionsFetchRequested = ({ value }) => {
     const inputVal = value.trim().toLowerCase();
     const inputLength = inputVal.length;
-    const { symbols } = this.state;
+    const { allCoins } = this.state;
 
     const suggestions =
       inputLength === 0
         ? []
-        : symbols
-            .filter(
-              // s =>
-              //   s.symbol.toLowerCase().slice(0, inputLength) === inputVal ||
-              //   s.name.toLowerCase().slice(0, inputLength) === inputVal
-              s => {
-                // compare only against symbol if length of 4 or less
-                if (inputLength < 4) {
-                  return (
-                    s.symbol.toLowerCase().slice(0, inputLength) === inputVal
-                  );
-                }
-                // compare against first symbol then name
+        : allCoins
+            .filter(c => {
+              // compare only against symbol if length of 4 or less
+              if (inputLength < 4) {
                 return (
-                  s.symbol.toLowerCase().slice(0, inputLength) === inputVal ||
-                  s.name.toLowerCase().slice(0, inputLength) === inputVal
+                  c.symbol.toLowerCase().slice(0, inputLength) === inputVal
                 );
               }
-            )
+              // compare against first symbol then name
+              return (
+                c.symbol.toLowerCase().slice(0, inputLength) === inputVal ||
+                c.name.toLowerCase().slice(0, inputLength) === inputVal
+              );
+            })
             .slice(0, 5);
     this.setState({
       suggestions,
@@ -67,9 +62,9 @@ class Searchbar extends Component {
   renderSuggestion = suggestion => {
     const { coins, addCoin } = this.props;
 
-    const addedCoins = coins.map(s => s.symbol);
+    const addedCoins = coins.map(c => c.symbol);
     const coinExists = addedCoins.some(
-      s => s === suggestion.symbol.trim().toUpperCase()
+      c => c === suggestion.symbol.trim().toUpperCase()
     );
 
     return (

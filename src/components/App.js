@@ -33,15 +33,32 @@ class App extends Component {
     coins: [],
   };
 
-  addCoin = async coin => {
-    const { id } = coin;
-    if (this.getCoin(id)) {
+  toggleVisibility = id => {
+    const { coins } = this.state;
+    this.setState({
+      coins: coins.map(c => {
+        if (c.id == id) c.display = !c.display;
+        return c;
+      }),
+    });
+  };
+
+  addCoin = async id => {
+    const { coins } = this.state;
+    const coinExists = coins.some(c => c.id === id);
+
+    if (!coinExists) {
       const newCoin = await this.getCoin(id);
-      this.setState({ coins: [...this.state.coins, newCoin] });
+      this.setState({ coins: [...coins, newCoin] });
     }
   };
 
-  getMeta = coin => {
+  removeCoin = id => {
+    const { coins } = this.state;
+    this.setState({ coins: coins.filter(c => c.id !== id) });
+  };
+
+  buildMeta = coin => {
     const { id, symbol, name } = coin;
     return {
       id: id,
@@ -52,7 +69,7 @@ class App extends Component {
     };
   };
 
-  getQuote = coin => {
+  buildQuote = coin => {
     const { market_data } = coin;
     return {
       price: market_data.current_price.usd,
@@ -62,23 +79,23 @@ class App extends Component {
   };
 
   getCoin = async id => {
-    const { coins } = this.state;
-
-    const coinExists = coins.some(c => c.id === id);
-
-    if (!coinExists) {
-      const chart = getMarketChart(id);
-      const coin = await getCoinData(id);
-      const meta = this.getMeta(coin);
-      const quote = this.getQuote(coin);
-
-      return { ...meta, ...quote, chart: await chart };
-    } else {
-      return null;
-    }
+    const chart = getMarketChart(id);
+    const coin = await getCoinData(id);
+    const meta = this.buildMeta(coin);
+    const quote = this.buildQuote(coin);
+    return { ...meta, ...quote, chart: await chart };
   };
 
-  componentDidMount() {}
+  componentDidMount = async () => {
+    const init = ['bitcoin', 'litecoin', 'ethereum', 'ripple'];
+
+    const initialCoins = await Promise.all(init.map(c => this.getCoin(c)));
+
+    this.setState({
+      initLoad: true,
+      coins: initialCoins,
+    });
+  };
 
   render() {
     const { coins } = this.state;
