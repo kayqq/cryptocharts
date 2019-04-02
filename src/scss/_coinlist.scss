@@ -1,0 +1,21 @@
+.CoinList {
+  height: 100%;
+  overflow: hidden;
+
+  .title {
+    font-size: 1.1em;
+    color: $text-color;
+    margin-left: 10px;
+    padding-left: 12%;
+    margin-top: 10vh;
+    margin-bottom: 7%;
+
+    &:after {
+      content: ' ';
+      border-bottom: 1px solid #39455c;
+      width: 70%;
+      display: block;
+      margin-top: 40px;
+    }
+  }
+}

@@ -1,0 +1,127 @@
+$add-stock-icon-size: 30px 30px;
+
+.react-autosuggest__container {
+  // width: 100%;
+  // min-width: 300px;
+  // margin-top: 10vh;
+  // margin-left: 10vh;
+  z-index: 1;
+  overflow: visible;
+  box-shadow: 0 6px 10px 0 rgba(28, 28, 49, 0.14),
+    0 1px 18px 0 rgba(28, 28, 49, 0.12), 0 3px 5px -1px rgba(28, 28, 49, 0.4);
+  transition: all ease-out 0.1s;
+  height: auto;
+
+  &:hover {
+    box-shadow: 0 24px 38px 3px rgba(28, 28, 49, 0.14),
+      0 9px 46px 8px rgba(28, 28, 49, 0.12),
+      0 11px 15px -7px rgba(28, 28, 49, 0.4);
+  }
+}
+
+.react-autosuggest__input {
+  // display: flex;
+  // flex-grow: 1;
+  height: 60px;
+  background-color: rgba(47, 47, 64, 1);
+  border: none;
+  padding-left: 55px;
+  font-family: 'Avenir-Next-Regular', Verdana, Geneva, sans-serif;
+  font-size: 1em;
+  color: $text-color;
+}
+
+.input-container {
+  overflow: visible;
+  position: relative;
+}
+
+.react-autosuggest__suggestions-container {
+  // display: flex;
+  position: absolute;
+  // width: 100%;
+  // min-width: 300px;
+  z-index: 1;
+  background-color: rgba(47, 47, 64, 1);
+  box-shadow: 0 6px 10px 0 rgba(28, 28, 49, 0.14);
+  transition: all ease-out 0.1s;
+}
+
+.react-autosuggest__suggestions-container--open {
+  padding-bottom: 15px;
+}
+
+.react-autosuggest__suggestion {
+  :hover {
+    background-color: rgb(56, 56, 77);
+  }
+  .suggestion {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    color: $text-color;
+    height: 70px;
+
+    .suggestion-left {
+      padding-left: 56px;
+
+      .suggestion-symbol {
+        font-family: 'Avenir-Next-Demibold', Verdana, Geneva, sans-serif;
+        font-size: 1.1em;
+        margin-bottom: 6px;
+      }
+
+      .suggestion-full-name {
+        white-space: nowrap;
+        overflow-x: hidden;
+        width: 200px;
+        text-overflow: ellipsis;
+        font-size: 0.8em;
+      }
+    }
+
+    .suggestion-right {
+      margin-right: 10%;
+
+      .add-stock-button {
+        display: block;
+        width: 30px;
+        height: 30px;
+        // background: url('../images/add_stock_icon.svg');
+        background-size: $add-stock-icon-size;
+
+        &:hover {
+          // background: url('../images/add_stock_icon_hover.svg');
+          background-size: $add-stock-icon-size;
+        }
+      }
+
+      .stock-added-button {
+        display: block;
+        width: 30px;
+        height: 30px;
+        // background: url('../images/stock_added_icon.svg');
+        background-size: $add-stock-icon-size;
+      }
+    }
+  }
+}
+
+::-webkit-input-placeholder {
+  color: #777f91;
+}
+
+.react-autosuggest__input--focused {
+  outline: none;
+}
+
+.search-icon {
+  position: absolute;
+  top: 19px;
+  left: 19px;
+  width: 22px;
+  height: 22px;
+  // background: url('../images/search_icon.svg');
+  background-size: 22px 22px;
+}

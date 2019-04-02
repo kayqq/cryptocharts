@@ -1,0 +1,33 @@
+@import '_coinlist';
+
+.App {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Avenir-Next-Regular', Verdana, Geneva, sans-serif;
+
+  .LoadingIcon {
+    // @extend .sk-folding-cube;
+    width: 70px;
+    height: 70px;
+  }
+
+  .container-coinlist {
+    width: 20%;
+    min-width: 290px;
+    height: 100%;
+    background-color: $faded-purple;
+  }
+
+  .container-graph {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 80%;
+    height: 100%;
+    background-color: $deep-purple;
+  }
+}
