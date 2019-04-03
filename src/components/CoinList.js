@@ -8,10 +8,10 @@ export default ({ coins, addCoin, removeCoin, toggleVisibility }) => (
     <div className="title">My Coins</div>
     {coins.map(coin => (
       <Coin
-        coin={coin}
         key={coin.symbol}
-        // removeCoin={removeCoin}
-        // toggleVisibility={toggleVisibility}
+        coin={coin}
+        removeCoin={removeCoin}
+        toggleVisibility={toggleVisibility}
       />
     ))}
   </div>

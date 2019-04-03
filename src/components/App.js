@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import CoinList from './CoinList';
 import { getCoinData, getMarketChart } from '../services/coingecko';
+import Graph from './Graph';
 
 const COLORS = [
   '#FF1744',
@@ -49,7 +50,8 @@ class App extends Component {
 
     if (!coinExists) {
       const newCoin = await this.getCoin(id);
-      this.setState({ coins: [...coins, newCoin] });
+      console.log(newCoin);
+      this.setState({ coins: [newCoin, ...coins] });
     }
   };
 
@@ -72,9 +74,10 @@ class App extends Component {
   buildQuote = coin => {
     const { market_data } = coin;
     return {
-      price: market_data.current_price.usd,
-      change: market_data.price_change_24h,
-      changePercent: market_data.price_change_percentage_24h_in_currency.usd,
+      price: market_data.current_price.usd || 0,
+      change: market_data.price_change_24h || 0,
+      changePercent:
+        market_data.price_change_percentage_24h_in_currency.usd || 0,
     };
   };
 
@@ -83,7 +86,7 @@ class App extends Component {
     const coin = await getCoinData(id);
     const meta = this.buildMeta(coin);
     const quote = this.buildQuote(coin);
-    return { ...meta, ...quote, chart: await chart };
+    return { ...meta, ...quote, data: await chart };
   };
 
   componentDidMount = async () => {
@@ -95,16 +98,37 @@ class App extends Component {
       initLoad: true,
       coins: initialCoins,
     });
+
+    // Update data every 10 seconds
+    this.interval = setInterval(async () => {
+      const { coins } = this.state;
+      const updatedCoins = await Promise.all(
+        coins.map(c => this.getCoin(c.id))
+      );
+
+      this.setState({ coins: updatedCoins });
+    }, 10000);
   };
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
 
   render() {
     const { coins } = this.state;
 
     return (
       <div className="App">
-        <div className="container-graph">Graph</div>
+        <div className="container-graph">
+          <Graph series={coins.filter(s => s.display)} />
+        </div>
         <div className="container-coinlist">
-          <CoinList coins={coins} addCoin={this.addCoin} />
+          <CoinList
+            coins={coins}
+            addCoin={this.addCoin}
+            removeCoin={this.removeCoin}
+            toggleVisibility={this.toggleVisibility}
+          />
         </div>
       </div>
     );
