@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+// Rate Limit: 100 requests/minute
 const axiosInstance = axios.create({
   baseURL: `https://api.coingecko.com/api/v3`,
 });

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="33px" height="33px" viewBox="0 0 33 33" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.2 (39069) - http://www.bohemiancoding.com/sketch -->
+    <title>viewable icon 1</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="viewable-icon-1">
+            <g id="hide" transform="translate(1.000000, 1.000000)">
+                <circle id="Combined-Shape" stroke="#2F2F40" stroke-width="2.062" cx="15.5" cy="15.5" r="15.5"></circle>
+                <circle id="Combined-Shape" fill="#2F2F40" cx="15.825" cy="15.825" r="3.82500005"></circle>
+                <path d="M12.612749,21.0984304 C12.7681471,21.184461 12.9273398,21.2658793 13.0903068,21.3419845 C13.9549585,21.7457747 14.9258597,22 16,22 C21.2182782,22 24,16 24,16 C24,16 21.3516116,10 16,10 C10.6483884,10 8,16 8,16 C8,16 8.37167151,16.8016722 9.09815694,17.8189465 C9.09815694,17.8189465 9.41209499,18.2961715 9.77599977,18.7140315" id="Eye" stroke="#2F2F40" stroke-width="1.5"></path>
+            </g>
+        </g>
+    </g>
+</svg>

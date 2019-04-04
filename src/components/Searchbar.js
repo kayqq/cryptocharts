@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import Autosuggest from 'react-autosuggest';
 import { getCoins } from '../services/coingecko';
 import Suggestion from './Suggestion';
 
-class Searchbar extends Component {
+class Searchbar extends PureComponent {
   state = {
     value: '',
     suggestions: [],
@@ -13,6 +13,7 @@ class Searchbar extends Component {
   componentWillMount() {
     this.fetchSuggestions();
   }
+
   fetchSuggestions = async () => {
     this.setState({ allCoins: await getCoins() });
   };
@@ -64,9 +65,8 @@ class Searchbar extends Component {
 
     const addedCoins = coins.map(c => c.symbol);
     const coinExists = addedCoins.some(
-      c => c === suggestion.symbol.trim().toUpperCase()
+      c => c === suggestion.symbol.trim().toLowerCase()
     );
-
     return (
       <Suggestion
         coinExists={coinExists}
@@ -95,7 +95,7 @@ class Searchbar extends Component {
     const { value, suggestions } = this.state;
 
     const inputProps = {
-      placeholder: 'Search by symbol or name',
+      placeholder: 'Search for a coin',
       value,
       onChange: this.onChange,
     };

@@ -53,7 +53,6 @@ $coin-height: 70px;
   height: $coin-height;
   margin: 4px 0 4px 0;
   position: relative;
-  // transition: transform 0.2s cubic-bezier(0.02, 0.51, 0.58, 1);
 
   .color-tab {
     height: 100%;
@@ -61,9 +60,12 @@ $coin-height: 70px;
   }
 
   .coin-fly-in {
+    box-sizing: border-box;
     display: none;
     flex-direction: row;
-    justify-content: center;
+    justify-content: flex-start;
+    padding-left: 10px;
+    padding-right: 10px;
     // width: 120px;
     width: 100%;
     position: absolute;
@@ -133,32 +135,32 @@ $coin-height: 70px;
     }
 
     .coin-remove-button {
-      // background: url('../images/delete_coin_icon.svg');
+      background: url('../images/delete_coin_icon.svg');
       background-size: $icon-size;
       margin-left: 16px;
 
       &:hover {
-        // background: url('../images/delete_coin_icon_hover.svg');
+        background: url('../images/delete_coin_icon_hover.svg');
         background-size: $icon-size;
       }
     }
 
     .coin-view-show-button {
-      // background: url('../images/view_show_icon_3.svg');
+      background: url('../images/view_show_icon_3.svg');
       background-size: $icon-size;
 
       &:hover {
-        // background: url('../images/view_show_icon_hover_3.svg');
+        background: url('../images/view_show_icon_hover_3.svg');
         background-size: $icon-size;
       }
     }
 
     .coin-view-hidden-button {
-      // background: url('../images/view_hidden_icon.svg');
+      background: url('../images/view_hidden_icon.svg');
       background-size: $icon-size;
 
       &:hover {
-        // background: url('../images/view_hidden_icon_hover.svg');
+        background: url('../images/view_hidden_icon_hover.svg');
         background-size: $icon-size;
       }
     }

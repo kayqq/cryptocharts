@@ -1,6 +1,6 @@
 import React from 'react';
 
-class Coin extends React.Component {
+class Coin extends React.PureComponent {
   // Drag & Drop
   dragStartX = 0;
   left = 0;
@@ -31,15 +31,11 @@ class Coin extends React.Component {
 
     return (
       <div className="buttons">
-        <span className={viewButtonClass} onClick={this.onToggleVisibility}>
-          View
-        </span>
+        <span className={viewButtonClass} onClick={this.onToggleVisibility} />
         <span
           className="coin-remove-button coin-button"
           onClick={this.onRemoveCoin}
-        >
-          X
-        </span>
+        />
       </div>
     );
   };
@@ -86,7 +82,7 @@ class Coin extends React.Component {
   };
 
   onDragEnd = () => {
-    const { coin, coinContainer, coinFlyIn } = this.refs;
+    const { coin } = this.refs;
     // repeated code, dry this
     const mouseoverOffset = this.isOffset ? coin.offsetWidth * 0.33 : 0;
     const currentLeft = this.left - mouseoverOffset;
@@ -95,7 +91,6 @@ class Coin extends React.Component {
       this.dragged = false;
       if (currentLeft <= coin.offsetWidth * this.deleteThreshold * -1) {
         coin.style.transition = 'transform 0.5s ease-out';
-        console.log(coin.offsetHeight);
         this.left = -coin.offsetWidth * 2;
 
         this.onSwiped();
@@ -108,16 +103,22 @@ class Coin extends React.Component {
 
   // Move
   onMouseMove = evt => {
-    this.left = evt.clientX - this.dragStartX;
+    const left = evt.clientX - this.dragStartX;
+    if (left < 0) {
+      this.left = left;
+    }
   };
 
   onTouchMove = evt => {
     const touch = evt.targetTouches[0];
-    this.left = touch.clientX - this.dragStartX;
+    const left = touch.clientX - this.dragStartX;
+    if (left < 0) {
+      this.left = left;
+    }
   };
 
   updatePosition = () => {
-    const { coin, coinFlyIn, coinContainer, colorTab } = this.refs;
+    const { coin, coinFlyIn, colorTab } = this.refs;
 
     if (this.dragged) requestAnimationFrame(this.updatePosition);
 
@@ -128,7 +129,6 @@ class Coin extends React.Component {
       // repeated code, dry this
       const mouseoverOffset = this.isOffset ? coin.offsetWidth * 0.33 : 0;
       const currentLeft = this.left - mouseoverOffset;
-      console.log(currentLeft);
 
       if (currentLeft < 0 && currentLeft >= -coin.offsetWidth) {
         // UPDATE DIV POSITION IF WITHIN BOUNDS
@@ -152,7 +152,6 @@ class Coin extends React.Component {
   onSwiped = () => {
     const { coin, removeCoin } = this.props;
     removeCoin(coin.id);
-    console.log('deleting');
   };
 
   componentDidMount() {

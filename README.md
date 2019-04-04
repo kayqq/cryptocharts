@@ -14,3 +14,6 @@ Update Coins
 
 Color Cycle
 -redo color carousel to reset
+
+Search Icon
+-become spinner when adding new coin

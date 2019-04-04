@@ -25,20 +25,25 @@ let lastColorIdx = 0;
 
 const setStockColor = () => {
   const color = COLORS[lastColorIdx];
-  lastColorIdx++;
+  if (COLORS.length === lastColorIdx + 1) {
+    lastColorIdx = 0;
+  } else {
+    lastColorIdx++;
+  }
   return color;
 };
 
 class App extends Component {
   state = {
     coins: [],
+    tick: 0,
   };
 
   toggleVisibility = id => {
     const { coins } = this.state;
     this.setState({
       coins: coins.map(c => {
-        if (c.id == id) c.display = !c.display;
+        if (c.id === id) c.display = !c.display;
         return c;
       }),
     });
@@ -50,7 +55,6 @@ class App extends Component {
 
     if (!coinExists) {
       const newCoin = await this.getCoin(id);
-      console.log(newCoin);
       this.setState({ coins: [newCoin, ...coins] });
     }
   };
@@ -89,38 +93,53 @@ class App extends Component {
     return { ...meta, ...quote, data: await chart };
   };
 
-  componentDidMount = async () => {
+  updateCoins = async () => {
+    const { coins } = this.state;
+    const updatedCharts = await Promise.all(
+      coins.map(c => getMarketChart(c.id))
+    );
+
+    const updatedCoins = coins.map((coin, index) => {
+      coin.data = updatedCharts[index];
+      return coin;
+    });
+    this.setState({ coins: updatedCoins });
+  };
+
+  initApp = async () => {
     const init = ['bitcoin', 'litecoin', 'ethereum', 'ripple'];
-
     const initialCoins = await Promise.all(init.map(c => this.getCoin(c)));
-
     this.setState({
       initLoad: true,
       coins: initialCoins,
     });
+  };
 
-    // Update data every 10 seconds
-    this.interval = setInterval(async () => {
-      const { coins } = this.state;
-      const updatedCoins = await Promise.all(
-        coins.map(c => this.getCoin(c.id))
-      );
+  initUpdateTimer = () => {
+    this.updateInterval = setInterval(() => {
+      this.setState({ tick: this.state.tick + 1 });
+      if (this.state.tick >= 10) {
+        this.updateCoins();
+        this.setState({ tick: 0 });
+      }
+    }, 1000);
+  };
 
-      this.setState({ coins: updatedCoins });
-    }, 10000);
+  componentDidMount = async () => {
+    this.initApp();
+    this.initUpdateTimer();
   };
 
   componentWillUnmount() {
-    clearInterval(this.interval);
+    clearInterval(this.updateInterval);
   }
 
   render() {
     const { coins } = this.state;
-
     return (
       <div className="App">
         <div className="container-graph">
-          <Graph series={coins.filter(s => s.display)} />
+          <Graph coins={coins} />
         </div>
         <div className="container-coinlist">
           <CoinList
