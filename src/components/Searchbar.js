@@ -60,9 +60,8 @@ class Searchbar extends PureComponent {
     });
   };
 
-  renderSuggestion = suggestion => {
+  renderSuggestion = (suggestion, { isHighlighted }) => {
     const { coins, addCoin } = this.props;
-
     const addedCoins = coins.map(c => c.symbol);
     const coinExists = addedCoins.some(
       c => c === suggestion.symbol.trim().toLowerCase()

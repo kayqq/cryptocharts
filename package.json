@@ -2,6 +2,7 @@
   "name": "cryptocharts",
   "version": "0.1.0",
   "private": true,
+  "home": "https:/cryptocharts.kennyquan.com",
   "dependencies": {
     "axios": "^0.18.0",
     "highcharts": "^7.0.3",
@@ -12,6 +13,8 @@
     "react-scripts": "2.1.8"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -28,6 +31,7 @@
   ],
   "devDependencies": {
     "eslint-plugin-prettier": "^3.0.1",
+    "gh-pages": "^2.0.1",
     "prettier": "^1.16.4",
     "react-autosuggest": "^9.4.3"
   }

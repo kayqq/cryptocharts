@@ -39,31 +39,6 @@ class App extends Component {
     tick: 0,
   };
 
-  toggleVisibility = id => {
-    const { coins } = this.state;
-    this.setState({
-      coins: coins.map(c => {
-        if (c.id === id) c.display = !c.display;
-        return c;
-      }),
-    });
-  };
-
-  addCoin = async id => {
-    const { coins } = this.state;
-    const coinExists = coins.some(c => c.id === id);
-
-    if (!coinExists) {
-      const newCoin = await this.getCoin(id);
-      this.setState({ coins: [newCoin, ...coins] });
-    }
-  };
-
-  removeCoin = id => {
-    const { coins } = this.state;
-    this.setState({ coins: coins.filter(c => c.id !== id) });
-  };
-
   buildMeta = coin => {
     const { id, symbol, name } = coin;
     return {
@@ -93,6 +68,21 @@ class App extends Component {
     return { ...meta, ...quote, data: await chart };
   };
 
+  addCoin = async id => {
+    const { coins } = this.state;
+    const coinExists = coins.some(c => c.id === id);
+
+    if (!coinExists) {
+      const newCoin = await this.getCoin(id);
+      this.setState({ coins: [newCoin, ...coins] });
+    }
+  };
+
+  removeCoin = id => {
+    const { coins } = this.state;
+    this.setState({ coins: coins.filter(c => c.id !== id) });
+  };
+
   updateCoins = async () => {
     const { coins } = this.state;
     const updatedCharts = await Promise.all(
@@ -104,6 +94,16 @@ class App extends Component {
       return coin;
     });
     this.setState({ coins: updatedCoins });
+  };
+
+  toggleVisibility = id => {
+    const { coins } = this.state;
+    this.setState({
+      coins: coins.map(c => {
+        if (c.id === id) c.display = !c.display;
+        return c;
+      }),
+    });
   };
 
   initApp = async () => {
