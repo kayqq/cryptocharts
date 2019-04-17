@@ -2,7 +2,7 @@
   "name": "cryptocharts",
   "version": "0.1.0",
   "private": true,
-  "home": "https:/cryptocharts.kennyquan.com",
+  "home": "https://cryptocharts.kennyquan.com",
   "dependencies": {
     "axios": "^0.18.0",
     "highcharts": "^7.0.3",
